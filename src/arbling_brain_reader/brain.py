@@ -68,6 +68,7 @@ def brain_status(brain_path: Path) -> dict:
             capture_output=True,
             text=True,
             timeout=10,
+            stdin=subprocess.DEVNULL,
         )
         if result.returncode == 0 and result.stdout.strip():
             parts = result.stdout.strip().split("\x1f")
@@ -326,6 +327,7 @@ def refresh_brain(brain_path: Path) -> dict:
             capture_output=True,
             text=True,
             timeout=10,
+            stdin=subprocess.DEVNULL,
         )
         if r.returncode == 0:
             old_sha = r.stdout.strip()
@@ -339,6 +341,7 @@ def refresh_brain(brain_path: Path) -> dict:
             capture_output=True,
             text=True,
             timeout=60,
+            stdin=subprocess.DEVNULL,
         )
     except FileNotFoundError:
         return {"status": "error", "message": "git not found in PATH"}
@@ -361,6 +364,7 @@ def refresh_brain(brain_path: Path) -> dict:
             capture_output=True,
             text=True,
             timeout=10,
+            stdin=subprocess.DEVNULL,
         )
         if r2.returncode == 0:
             new_sha = r2.stdout.strip()
@@ -377,6 +381,7 @@ def refresh_brain(brain_path: Path) -> dict:
                 capture_output=True,
                 text=True,
                 timeout=10,
+                stdin=subprocess.DEVNULL,
             )
             if diff.returncode == 0:
                 files_changed = [f for f in diff.stdout.strip().splitlines() if f]

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "arbling-brain-reader"
-version = "0.1.0"
+version = "0.1.1"
 description = "Read-only MCP server that exposes any Arbling-schema markdown vault to Claude Code and other MCP clients"
 readme = "README.md"
 license = { text = "Apache-2.0" }

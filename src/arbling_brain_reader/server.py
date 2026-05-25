@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal
 
+import anyio
 from mcp.server.fastmcp import FastMCP
 
 from .brain import (
@@ -29,7 +30,7 @@ validate_brain(_BRAIN_PATH)
 
 
 @mcp.tool()
-def brain_status() -> dict:
+async def brain_status() -> dict:
     """
     Return health and freshness info for the mounted Brain vault.
 
@@ -39,7 +40,7 @@ def brain_status() -> dict:
     Call this first to verify the Brain is reachable and to check how
     stale the local clone is (last_commit_date).
     """
-    return _brain_status(_BRAIN_PATH)
+    return await anyio.to_thread.run_sync(lambda: _brain_status(_BRAIN_PATH))
 
 
 @mcp.tool()
@@ -162,7 +163,7 @@ def latest_retrospective() -> dict:
 
 
 @mcp.tool()
-def refresh_brain() -> dict:
+async def refresh_brain() -> dict:
     """
     Pull the latest Brain content from the GitHub remote.
 
@@ -179,4 +180,4 @@ def refresh_brain() -> dict:
     This is the ONLY tool that modifies local filesystem state, and only by
     syncing the clone from the remote. It does NOT push or edit Brain pages.
     """
-    return _refresh_brain(_BRAIN_PATH)
+    return await anyio.to_thread.run_sync(lambda: _refresh_brain(_BRAIN_PATH))
