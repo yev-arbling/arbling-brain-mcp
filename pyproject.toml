@@ -18,15 +18,18 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "mcp>=1.0.0",
+    "mcp>=1.0.0,<2",
     "python-frontmatter>=1.0.0",
+    # server.py imports anyio directly (offloads blocking Brain I/O via
+    # anyio.to_thread); declare it explicitly rather than leaning on mcp's
+    # transitive pin.
+    "anyio>=4.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
     "pytest-asyncio>=0.23",
-    "anyio>=4.0",
     "build>=1.0",
     "twine>=5.0",
 ]
