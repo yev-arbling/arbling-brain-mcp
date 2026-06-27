@@ -9,6 +9,7 @@ import importlib
 import os
 from pathlib import Path
 
+import anyio
 import pytest
 
 
@@ -35,7 +36,9 @@ def test_server_rejects_bad_brain(tmp_path: Path, fake_brain: Path):
 
 def test_server_brain_status_tool(fake_brain: Path):
     srv = _load_server(fake_brain)
-    result = srv.brain_status()
+    # brain_status is an async tool (offloads blocking I/O via anyio.to_thread),
+    # so drive it to completion rather than calling it like a sync function.
+    result = anyio.run(srv.brain_status)
     assert "wiki_page_count" in result
     assert result["wiki_page_count"] >= 1
 
