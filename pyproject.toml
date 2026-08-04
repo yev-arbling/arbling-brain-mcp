@@ -18,7 +18,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "mcp>=1.0.0,<2",
+    "mcp>=1.0.0,<3",
     "python-frontmatter>=1.0.0",
     # server.py imports anyio directly (offloads blocking Brain I/O via
     # anyio.to_thread); declare it explicitly rather than leaning on mcp's
