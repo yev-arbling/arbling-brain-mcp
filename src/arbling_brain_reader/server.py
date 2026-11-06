@@ -6,7 +6,10 @@ from pathlib import Path
 from typing import Literal
 
 import anyio
-from mcp.server.fastmcp import FastMCP
+try:  # mcp >= 2.0 renamed FastMCP to MCPServer and moved it to mcp.server.mcpserver
+    from mcp.server.mcpserver import MCPServer as FastMCP
+except ImportError:  # mcp 1.x
+    from mcp.server.fastmcp import FastMCP
 
 from .brain import (
     brain_status as _brain_status,
